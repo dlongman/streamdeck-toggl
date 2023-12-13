@@ -1,34 +1,34 @@
 {
     "Actions": [
       {
-        "Icon": "resources/actionIcon", 
+        "Icon": "resources/power.circle.fill", 
         "Name": "Toggl", 
         "States": [
           {
-            "Image": "resources/actionImageOn",
+            "Image": "resources/timer.enabled",
             "TitleAlignment": "bottom",
             "FontSize": "10"
           },
           {
-            "Image": "resources/actionImageOff",
+            "Image": "resources/timer.disabled",
             "TitleAlignment": "bottom",
             "FontSize": "10"
           }
         ], 
         "SupportedInMultiActions": true,
-        "Tooltip": "Hassle-free time tracking using the Elgato Stream Deck and Toggl", 
-        "UUID": "io.moeritz.streamdeck.toggl.toggle"
+        "Tooltip": "Track your time with Toggl and the Elgato Stream Deck", 
+        "UUID": "com.d9n.streamdeck.toggl.toggle"
       }
     ], 
     "SDKVersion": 2,
-    "Author": "tobimori", 
+    "Author": "d9n.com", 
     "CodePath": "plugin/main.html", 
-    "Description": "Hassle-free time tracking using the Elgato Stream Deck and Toggl.", 
+    "Description": "Track your time with Toggl and the Elgato Stream Deck.", 
     "Name": "Toggl", 
-    "Icon": "resources/pluginIcon", 
+    "Icon": "resources/power.circle.fill", 
     "PropertyInspectorPath": "pi/main_pi.html",
-    "URL": "https://moeritz.io", 
-    "Version": "1.4.1",
+    "URL": "https://davelongman.com", 
+    "Version": "1.0.0",
     "OS": [
       {
           "Platform": "mac", 

@@ -4,6 +4,7 @@ const togglBaseUrl = 'https://api.track.toggl.com/api/v8'
 let websocket = null
 let currentButtons = new Map()
 let polling = false
+let useDescriptionWhenMatching = false
 
 function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo) {
 
@@ -43,9 +44,8 @@ function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, in
   }
 }
 
-
 function removeButton(context) {
-  return currentButtons.delete(context)
+  currentButtons.delete(context)
 }
 
 function addButton(context, settings) {
@@ -84,12 +84,10 @@ function refreshButtons() {
         if (apiToken != settings.apiToken) //not one of "our" buttons
           return //We're in a forEach, this is effectively a 'continue'
         
-        if (entryData //Does button match the active timer? 
-            && entryData.wid == settings.workspaceId 
-            && entryData.pid == settings.projectId 
-            && entryData.description == settings.activity) {
-          setState(context, 0)
-          setTitle(context, `${formatElapsed(entryData.duration)}\n\n\n${settings.label}`)
+        if (entryMatches(settings, entryData)) {
+          setState(context, 0) 
+          //setTitle(context, `${formatElapsed(entryData.duration)}\n\n\n${settings.label}`)
+          setTitle(context, `${formatElapsed(entryData.duration)}`)
         } else { //if not, make sure it's 'off'
           setState(context, 1)
           setTitle(context, settings.label)
@@ -97,6 +95,37 @@ function refreshButtons() {
       })
     })
   })
+}
+
+function entryMatches(settings, entryData) {
+
+    if (entryData == null) {
+      return false
+    }
+    
+    if (useDescriptionWhenMatching) {
+      return (matches(entryData.wid, settings.workspaceId) && 
+        matches(entryData.pid, settings.projectId) && 
+        matches(entryData.description, settings.activity))
+    }
+    else {
+      return (matches(entryData.wid, settings.workspaceId) && 
+        matches(entryData.pid, settings.projectId))
+    }
+}
+
+function matches(val1, val2) {
+  // treat blanks and zeros as matches
+  if (val1 === undefined && val2 == undefined) {
+    return true
+  }
+  if ((val1 == undefined && val2 == "") || (val2 == undefined && val1 == "")) {
+    return true
+  }
+  if ((val1 == undefined && val2 == "0") || (val2 == undefined && val1 == "0")) {
+    return true
+  }
+  return (val1 == val2)
 }
 
 function formatElapsed(elapsedFromToggl)
@@ -127,7 +156,8 @@ async function toggle(context, settings) {
     if (!entryData) {
       //Not running? Start a new one
       startEntry(apiToken, activity, workspaceId, projectId, billableToggle).then(v=>refreshButtons())
-    } else if (entryData.wid == workspaceId && entryData.pid == projectId && entryData.description == activity) {
+    // } else if (entryData.wid == workspaceId && entryData.pid == projectId && entryData.description == activity) {
+    } else if (entryMatches(settings, entryData)) { 
       //The one running is "this one" -- toggle to stop
       stopEntry(apiToken, entryData.id).then(v=>refreshButtons())
     } else {
@@ -152,7 +182,7 @@ function startEntry(apiToken = isRequired(), activity = 'Time Entry created by T
         description: activity,
         wid: workspaceId,
         pid: projectId,
-	billable: billableToggle,
+	      billable: billableToggle,
         created_with: 'Stream Deck'
       }
     })

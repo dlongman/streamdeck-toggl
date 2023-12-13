@@ -1,7 +1,3 @@
-> **⏸ Development ended - open to handover project**
-> 
-> Unfortunately, I am lacking time and energy to actively uphold development of this plugin. It still works with its bugs and quirks, but I will archive the plugin as-is for the time being. If anyone would like to take over and continue the development of this plugin, I'd be very happy - please get in touch.
-
 <p align="center">
   <a href="#">
     <img src="resources/readme/GitHubBanner.png" alt="Toggl Track + Elgato Stream Deck" />
@@ -33,9 +29,6 @@ ___
 
 # Hassle-free time tracking using [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck) and [Toggl Track](https://toggl.com/track/)
 
-## ✏️ Setup
-
-Just search for the Action "Toggl" within the Stream Deck app and install it. There is a button called "Toggl" available in section "Custom".
 
 ![PropertyInspector](resources/readme/PropertyInspector.png)
 
@@ -50,15 +43,3 @@ Just search for the Action "Toggl" within the Stream Deck app and install it. Th
 ![StreamDeckScreenshot](resources/readme/StreamDeckScreenshot.png)
 
 Just press any Toggl Button to start tracking time. The button should indicate tracking by turning red and showing the current tracking time (if no *Title* is set). The status of the button is defined by workspace, project and entry name. If you setup two identical buttons (even on different Stream Deck profiles), both button indicate the same. If you start or stop your timer using the Toggl app (web, desktop, mobile) Toggl for Stream Deck will follow by changing the status.
-
-## 📞 Help
-
-Feel free to ask your questions on [my Discord Server](https://discord.gg/YWy3UAy). Please use GitHub Issues for reporting bugs and requesting new features.
-
-## 📄 License
-
-streamdeck-toggl is licensed under the [MIT License](LICENSE).
-
-## Known Issues
-
-* Changing the *Button Label* wont change the *Title* immediately. Restart Stream Deck.
